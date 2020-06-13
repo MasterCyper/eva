@@ -11,14 +11,15 @@ ReceiptValidator& ReceiptValidator::getInstance()
 void ReceiptValidator::validateReceipt(Receipt& receipt)
 {
     unsigned int lineCount = 0;
+    unsigned int lastElement = 1;
     for(auto i : receipt.getReceiptProductLine())
     {
         if(i.getTotalDiscount() % i.getQuantity())
         {
-            unsigned int firstLineQuantity = i.getQuantity() - 1;
+            unsigned int firstLineQuantity = i.getQuantity() - lastElement;
             unsigned int firstLineDiscount = i.getTotalDiscount() - i.getTotalDiscount() / i.getQuantity();
 
-            unsigned int secondLineQuantity = 1;
+            unsigned int secondLineQuantity = lastElement;
             unsigned int secondLineDiscount = i.getTotalDiscount() - firstLineDiscount;
 
             ReceiptProductLine firstLine(i.getName(), i.getPrice(), firstLineQuantity, firstLineDiscount);
