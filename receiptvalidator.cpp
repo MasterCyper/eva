@@ -12,18 +12,18 @@ void ReceiptValidator::validateReceipt(Receipt& receipt)
 {
     unsigned int lineCount = 0;
     unsigned int lastElement = 1;
-    for(auto i : receipt.getReceiptProductLine())
+    for(auto receiptLine : receipt.getReceiptProductLine())
     {
-        if(i.getTotalDiscount() % i.getQuantity())
+        if(receiptLine.getTotalDiscount() % receiptLine.getQuantity())
         {
-            unsigned int firstLineQuantity = i.getQuantity() - lastElement;
-            unsigned int firstLineDiscount = i.getTotalDiscount() - i.getTotalDiscount() / i.getQuantity();
+            unsigned int firstLineQuantity = receiptLine.getQuantity() - lastElement;
+            unsigned int firstLineDiscount = receiptLine.getTotalDiscount() - receiptLine.getTotalDiscount() / receiptLine.getQuantity();
 
             unsigned int secondLineQuantity = lastElement;
-            unsigned int secondLineDiscount = i.getTotalDiscount() - firstLineDiscount;
+            unsigned int secondLineDiscount = receiptLine.getTotalDiscount() - firstLineDiscount;
 
-            ReceiptProductLine firstLine(i.getName(), i.getPrice(), firstLineQuantity, firstLineDiscount);
-            ReceiptProductLine secondLine(i.getName(), i.getPrice(), secondLineQuantity, secondLineDiscount);
+            ReceiptProductLine firstLine(receiptLine.getName(), receiptLine.getPrice(), firstLineQuantity, firstLineDiscount);
+            ReceiptProductLine secondLine(receiptLine.getName(), receiptLine.getPrice(), secondLineQuantity, secondLineDiscount);
 
             receipt.getReceiptProductLine().erase(receipt.getReceiptProductLine().begin() +  lineCount);
 
